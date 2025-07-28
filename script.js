@@ -1,57 +1,51 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f8ff;
-  margin: 0;
-  padding: 20px;
-}
+document.addEventListener("DOMContentLoaded", function () {
+  const cursos = document.querySelectorAll(".ramo");
+  const aprobados = new Set(JSON.parse(localStorage.getItem("cursosAprobados") || "[]"));
 
-h1 {
-  text-align: center;
-  color: #004080;
-}
+  function guardarEstado() {
+    localStorage.setItem("cursosAprobados", JSON.stringify(Array.from(aprobados)));
+  }
 
-.malla {
-  display: flex;
-  overflow-x: auto;
-  gap: 20px;
-  padding: 10px;
-}
+  function actualizarCursos() {
+    cursos.forEach((curso) => {
+      const nombre = curso.dataset.nombre;
+      const requisitos = curso.dataset.requiere
+        ? curso.dataset.requiere.split(",").map(r => r.trim())
+        : [];
 
-.ciclo {
-  min-width: 220px;
-  background-color: #e6f2ff;
-  border: 2px solid #a3c2f0;
-  border-radius: 10px;
-  padding: 10px;
-}
+      const desbloqueado = requisitos.length === 0 || requisitos.every(r => aprobados.has(r));
+      curso.classList.toggle("bloqueado", !desbloqueado);
+      curso.classList.toggle("desbloqueado", desbloqueado);
 
-.ciclo h2 {
-  text-align: center;
-  color: #003366;
-}
+      curso.textContent = nombre;
 
-.ramo {
-  margin: 8px 0;
-  padding: 10px;
-  background-color: #ffffff;
-  border: 2px solid #b3d1ff;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  text-align: center;
-}
+      if (aprobados.has(nombre)) {
+        curso.classList.add("aprobado");
+      } else {
+        curso.classList.remove("aprobado");
+      }
+    });
+  }
 
-.ramo.bloqueado {
-  background-color: #f0f0f0;
-  color: #999;
-  border-style: dashed;
-  cursor: not-allowed;
-}
+  cursos.forEach((curso) => {
+    curso.addEventListener("click", () => {
+      const nombre = curso.dataset.nombre;
+      const requisitos = curso.dataset.requiere
+        ? curso.dataset.requiere.split(",").map(r => r.trim())
+        : [];
+      const desbloqueado = requisitos.length === 0 || requisitos.every(r => aprobados.has(r));
 
-.ramo.aprobado {
-  text-decoration: line-through;
-  background-color: #d1ffd1;
-  border-color: #66cc66;
-  color: #003300;
-}
+      if (desbloqueado) {
+        if (aprobados.has(nombre)) {
+          aprobados.delete(nombre);
+        } else {
+          aprobados.add(nombre);
+        }
+        guardarEstado();
+        actualizarCursos();
+      }
+    });
+  });
 
+  actualizarCursos();
+});
