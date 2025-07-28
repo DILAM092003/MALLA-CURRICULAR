@@ -1,36 +1,45 @@
+// script.js mejorado con soporte para tachado, orden por columnas y desbloqueo de cursos
+
 document.addEventListener("DOMContentLoaded", function () {
-    const ramos = document.querySelectorAll('.ramo');
-    const aprobadoClass = 'aprobado';
+  const cursos = document.querySelectorAll(".ramo");
+  const aprobados = new Set(JSON.parse(localStorage.getItem("cursosAprobados") || "[]"));
 
-    // Mapea todos los cursos por su nombre
-    const mapaRamos = {};
-    ramos.forEach(ramo => {
-        const nombre = ramo.dataset.nombre.trim();
-        mapaRamos[nombre] = ramo;
+  function guardarEstado() {
+    localStorage.setItem("cursosAprobados", JSON.stringify(Array.from(aprobados)));
+  }
+
+  function actualizarCursos() {
+    cursos.forEach((curso) => {
+      const nombre = curso.getAttribute("data-nombre");
+      if (aprobados.has(nombre)) {
+        curso.classList.add("aprobado");
+      } else {
+        curso.classList.remove("aprobado");
+      }
+
+      const requisitos = curso.getAttribute("data-abre")?.split(",").map(r => r.trim()) || [];
+      const desbloqueado = requisitos.every(r => aprobados.has(r));
+
+      curso.classList.toggle("bloqueado", !desbloqueado && requisitos.length > 0);
+      curso.classList.toggle("desbloqueado", desbloqueado || requisitos.length === 0);
     });
+  }
 
-    // Evento de clic en cada ramo
-    ramos.forEach(ramo => {
-        ramo.addEventListener('click', () => {
-            ramo.classList.toggle(aprobadoClass);
-            actualizarDisponibles();
-        });
+  cursos.forEach((curso) => {
+    curso.addEventListener("click", () => {
+      const nombre = curso.getAttribute("data-nombre");
+
+      if (!curso.classList.contains("bloqueado")) {
+        if (aprobados.has(nombre)) {
+          aprobados.delete(nombre);
+        } else {
+          aprobados.add(nombre);
+        }
+        guardarEstado();
+        actualizarCursos();
+      }
     });
+  });
 
-    function actualizarDisponibles() {
-        ramos.forEach(ramo => {
-            const prerequisitos = ramo.dataset.abre?.split(',').map(p => p.trim()) || [];
-
-            // Verifica si todos los prerequisitos están aprobados
-            const desbloqueado = prerequisitos.every(nombre => {
-                const prereq = mapaRamos[nombre];
-                return prereq && prereq.classList.contains(aprobadoClass);
-            });
-
-            // Solo habilita si todos los requisitos están aprobados
-            if (prerequisitos.length > 0) {
-                ramo.classList.toggle('desbloqueado', desbloqueado);
-            }
-        });
-    }
+  actualizarCursos();
 });
