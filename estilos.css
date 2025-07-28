@@ -1,4 +1,3 @@
-
 body {
     font-family: Arial, sans-serif;
     background: #fff0f5;
@@ -56,3 +55,30 @@ h1 {
     color: #999;
     pointer-events: none;
 }
+
+
+
+
+
+
+.ramo {
+    background-color: #e0f7fa;
+    border: 1px solid #81d4fa;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    user-select: none;
+}
+
+.ramo.aprobado {
+    background-color: #4dd0e1;
+    color: white;
+    text-decoration: line-through;
+}
+
+.ramo.desbloqueado {
+    border: 2px dashed #00796b;
+}
+
