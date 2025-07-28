@@ -1,15 +1,103 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malla Interactiva IO</title>
-  <link rel="stylesheet" href="estilos.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malla Curricular IO</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-  <h1>Malla Interactiva - Investigación Operativa</h1>
-  <div id="malla" class="grid"></div>
-  <script src="script.js"></script>
-</body>
-</html>
+    <h1>Malla Curricular de Investigación Operativa</h1>
+    <div class="malla">
+        <!-- Primer Ciclo -->
+        <div class="ciclo" id="ciclo1">
+            <h2>Primer Ciclo</h2>
+            <div class="ramo" data-nombre="Lenguaje">Lenguaje</div>
+            <div class="ramo" data-nombre="Métodos De Estudio Universitario">Métodos De Estudio Universitario</div>
+            <div class="ramo" data-nombre="Gestión Personal">Gestión Personal</div>
+            <div class="ramo" data-nombre="Calculo I" data-abre="Calculo II,Modelos Determinísticos en Investigación Operativa I">Calculo I</div>
+            <div class="ramo" data-nombre="Matemática Básica" data-abre="Estadística y Probabilidad,Algebra Lineal">Matemática Básica</div>
+            <div class="ramo" data-nombre="Biología" data-abre="Medio Ambiente y Desarrollo Sostenible">Biología</div>
+        </div>
 
+        <!-- Segundo Ciclo -->
+        <div class="ciclo" id="ciclo2">
+            <h2>Segundo Ciclo</h2>
+            <div class="ramo" data-nombre="Fundamentos de Investigación Científica">Fundamentos de Investigación Científica</div>
+            <div class="ramo" data-nombre="Medio Ambiente y Desarrollo Sostenible" data-abre="Economía">Medio Ambiente y Desarrollo Sostenible</div>
+            <div class="ramo" data-nombre="Realidad Nacional y Mundial" data-abre="Economía">Realidad Nacional y Mundial</div>
+            <div class="ramo" data-nombre="Calculo II" data-abre="Calculo III,Estadística y Probabilidad,Métodos Numéricos">Calculo II</div>
+            <div class="ramo" data-nombre="Química Inorgánica Y Orgánica">Química Inorgánica Y Orgánica</div>
+            <div class="ramo" data-nombre="Física General">Física General</div>
+        </div>
+
+        <!-- Tercer Ciclo -->
+        <div class="ciclo" id="ciclo3">
+            <h2>Tercer Ciclo</h2>
+            <div class="ramo" data-nombre="Estadística y Probabilidad" data-abre="Inferencia Estadística,Modelos Probabilísticos en Investigación Operativa I,Procesos Estocásticos">Estadística y Probabilidad</div>
+            <div class="ramo" data-nombre="Economía" data-abre="Matemática Financiera,Modelos Econométricos">Economía</div>
+            <div class="ramo" data-nombre="Calculo III" data-abre="IEDO,Programación no Lineal y Dinámica">Calculo III</div>
+            <div class="ramo" data-nombre="Algebra Lineal" data-abre="IEDO,Programación Lineal y Entera,Matemática Financiera,Métodos Numéricos">Algebra Lineal</div>
+            <div class="ramo" data-nombre="Modelos Determinísticos en Investigación Operativa I" data-abre="Programación de Computadoras,Teoría, Análisis y diseño de sistemas,Modelos Determinísticos en Investigación Operativa II,Practica pre profesional Módulo I,Modelos Probabilísticos en Investigación Operativa I">Modelos Determinísticos en Investigación Operativa I</div>
+        </div>
+<!-- Cuarto Ciclo -->
+<div class="ciclo" id="ciclo4">
+    <h2>Cuarto Ciclo</h2>
+    <div class="ramo" data-nombre="Programación de Computadoras" data-abre="Métodos Numéricos,Practica pre profesional Módulo I,Heurística y Metaheurística">Programación de Computadoras</div>
+    <div class="ramo" data-nombre="IEDO" data-abre="Procesos Estocásticos">IEDO</div>
+    <div class="ramo" data-nombre="Inferencia Estadística" data-abre="Simulación de sistemas,Teoría de decisiones,Modelos Econométricos">Inferencia Estadística</div>
+    <div class="ramo" data-nombre="Programación Lineal y Entera" data-abre="Modelos Determinísticos en Investigación Operativa II,Matemática Financiera,Practica pre profesional Módulo I,Teoría de Grafos,Programación no Lineal y Dinámica">Programación Lineal y Entera</div>
+</div>
+
+<!-- Quinto Ciclo -->
+<div class="ciclo" id="ciclo5">
+    <h2>Quinto Ciclo</h2>
+    <div class="ramo" data-nombre="Teoría, Análisis y diseño de sistemas" data-abre="Gestión de Sistemas Organizacionales">Teoría, Análisis y diseño de sistemas</div>
+    <div class="ramo" data-nombre="Modelos Determinísticos en Investigación Operativa II" data-abre="Seminario de Investigación I">Modelos Determinísticos en Investigación Operativa II</div>
+    <div class="ramo" data-nombre="Matemática Financiera" data-abre="Teoría de decisiones,Modelos Econométricos,Formulación y Gestión de Proyectos">Matemática Financiera</div>
+    <div class="ramo" data-nombre="Métodos Numéricos" data-abre="Programación no Lineal y Dinámica">Métodos Numéricos</div>
+    <div class="ramo" data-nombre="Practica pre profesional Módulo I" data-abre="Practica pre profesional Módulo II">Practica pre profesional Módulo I</div>
+</div>
+
+<!-- Sexto Ciclo -->
+<div class="ciclo" id="ciclo6">
+    <h2>Sexto Ciclo</h2>
+    <div class="ramo" data-nombre="Modelos Probabilísticos en Investigación Operativa I" data-abre="Modelos Probabilísticos en Investigación Operativa II,Simulación de sistemas">Modelos Probabilísticos en Investigación Operativa I</div>
+    <div class="ramo" data-nombre="Procesos Estocásticos" data-abre="Simulación de sistemas">Procesos Estocásticos</div>
+    <div class="ramo" data-nombre="Gestión de Sistemas Organizacionales" data-abre="Formulación y Gestión de Proyectos">Gestión de Sistemas Organizacionales</div>
+    <div class="ramo" data-nombre="Seminario de Investigación I" data-abre="Seminario de Investigación II">Seminario de Investigación I</div>
+</div>
+
+<!-- Séptimo Ciclo -->
+<div class="ciclo" id="ciclo7">
+    <h2>Séptimo Ciclo</h2>
+    <div class="ramo" data-nombre="Modelos Probabilísticos en Investigación Operativa II" data-abre="Practica pre profesional Módulo II">Modelos Probabilísticos en Investigación Operativa II</div>
+    <div class="ramo" data-nombre="Simulación de sistemas" data-abre="Practica pre profesional Módulo II,Seminario de Tesis de Investigación Operativa I,Estudio de caso en Investigación Operativa">Simulación de sistemas</div>
+    <div class="ramo" data-nombre="Teoría de Grafos" data-abre="Heurística y Metaheurística,Practica pre profesional Módulo II,Seminario de Tesis de Investigación Operativa I,Estudio de caso en Investigación Operativa">Teoría de Grafos</div>
+</div>
+
+<!-- Octavo Ciclo -->
+<div class="ciclo" id="ciclo8">
+    <h2>Octavo Ciclo</h2>
+    <div class="ramo" data-nombre="Heurística y Metaheurística" data-abre="Estudio de caso en Investigación Operativa">Heurística y Metaheurística</div>
+    <div class="ramo" data-nombre="Teoría de decisiones" data-abre="Seminario de Tesis de Investigación Operativa I,Estudio de caso en Investigación Operativa">Teoría de decisiones</div>
+    <div class="ramo" data-nombre="Programación no Lineal y Dinámica" data-abre="Seminario de Tesis de Investigación Operativa I,Estudio de caso en Investigación Operativa">Programación no Lineal y Dinámica</div>
+    <div class="ramo" data-nombre="Seminario de Investigación II" data-abre="Seminario de Tesis de Investigación Operativa I">Seminario de Investigación II</div>
+    <div class="ramo" data-nombre="Practica pre profesional Módulo II" data-abre="Practica pre profesional Módulo III">Practica pre profesional Módulo II</div>
+</div>
+
+<!-- Noveno Ciclo -->
+<div class="ciclo" id="ciclo9">
+    <h2>Noveno Ciclo</h2>
+    <div class="ramo" data-nombre="Modelos Econométricos" data-abre="Series cronológicas">Modelos Econométricos</div>
+    <div class="ramo" data-nombre="Seminario de Tesis de Investigación Operativa I" data-abre="Seminario de Tesis de Investigación Operativa II">Seminario de Tesis de Investigación Operativa I</div>
+    <div class="ramo" data-nombre="Estudio de caso en Investigación Operativa">Estudio de caso en Investigación Operativa</div>
+    <div class="ramo" data-nombre="Formulación y Gestión de Proyectos">Formulación y Gestión de Proyectos</div>
+</div>
+
+<!-- Décimo Ciclo -->
+<div class="ciclo" id="ciclo10">
+    <h2>Décimo Ciclo</h2>
+    <div class="ramo" data-nombre="Series cronológicas">Series cronológicas</div>
+    <div class="ramo" data-nombre="Seminario de Tesis de Investigación Operativa II">Seminario de Tesis de Investigación Operativa II</div>
+    <div class="ramo" data-nombre="Practica pre profesional Módulo III">Practica pre profesional Módulo III</div>
+</div>
