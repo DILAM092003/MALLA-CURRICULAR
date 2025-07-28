@@ -1,50 +1,57 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const cursos = document.querySelectorAll(".ramo");
-  const aprobados = new Set(JSON.parse(localStorage.getItem("cursosAprobados") || "[]"));
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+  margin: 0;
+  padding: 20px;
+}
 
-  function guardarEstado() {
-    localStorage.setItem("cursosAprobados", JSON.stringify(Array.from(aprobados)));
-  }
+h1 {
+  text-align: center;
+  color: #004080;
+}
 
-  function actualizarCursos() {
-    cursos.forEach((curso) => {
-      const nombre = curso.dataset.nombre.trim();
-      const requisitos = curso.dataset.requiere
-        ? curso.dataset.requiere.split(",").map(r => r.trim())
-        : [];
+.malla {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 10px;
+}
 
-      const desbloqueado = requisitos.length === 0 || requisitos.every(req => aprobados.has(req));
+.ciclo {
+  min-width: 220px;
+  background-color: #e6f2ff;
+  border: 2px solid #a3c2f0;
+  border-radius: 10px;
+  padding: 10px;
+}
 
-      curso.classList.toggle("bloqueado", !desbloqueado);
-      curso.classList.toggle("desbloqueado", desbloqueado);
-      curso.classList.toggle("aprobado", aprobados.has(nombre));
-    });
-  }
+.ciclo h2 {
+  text-align: center;
+  color: #003366;
+}
 
-  cursos.forEach((curso) => {
-    curso.addEventListener("click", () => {
-      const nombre = curso.dataset.nombre.trim();
-      const requisitos = curso.dataset.requiere
-        ? curso.dataset.requiere.split(",").map(r => r.trim())
-        : [];
+.ramo {
+  margin: 8px 0;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 2px solid #b3d1ff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  text-align: center;
+}
 
-      const desbloqueado = requisitos.length === 0 || requisitos.every(req => aprobados.has(req));
+.ramo.bloqueado {
+  background-color: #f0f0f0;
+  color: #999;
+  border-style: dashed;
+  cursor: not-allowed;
+}
 
-      if (!desbloqueado) {
-        alert(`Para aprobar "${nombre}", debes primero aprobar:\n${requisitos.join(", ")}`);
-        return;
-      }
+.ramo.aprobado {
+  text-decoration: line-through;
+  background-color: #d1ffd1;
+  border-color: #66cc66;
+  color: #003300;
+}
 
-      if (aprobados.has(nombre)) {
-        aprobados.delete(nombre);
-      } else {
-        aprobados.add(nombre);
-      }
-
-      guardarEstado();
-      actualizarCursos();
-    });
-  });
-
-  actualizarCursos();
-});
