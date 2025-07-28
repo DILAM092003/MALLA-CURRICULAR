@@ -1,45 +1,109 @@
-// script.js mejorado con soporte para tachado, orden por columnas y desbloqueo de cursos
+const ramos = {
+  "Lenguaje": [],
+  "Métodos De Estudio Universitario": [],
+  "Gestión Personal": [],
+  "Calculo I": ["Calculo II", "Modelos Determinísticos en Investigación Operativa I"],
+  "Matemática Básica": ["Estadística y Probabilidad", "Algebra Lineal"],
+  "Biología": ["Medio Ambiente y Desarrollo Sostenible"],
+  "Fundamentos de Investigación Científica": [],
+  "Medio Ambiente y Desarrollo Sostenible": ["Economía"],
+  "Realidad Nacional y Mundial": ["Economía"],
+  "Calculo II": ["Calculo III", "Estadística y Probabilidad", "Métodos Numéricos"],
+  "Química Inorgánica Y Orgánica": [],
+  "Física General": [],
+  "Estadística y Probabilidad": ["Inferencia Estadística", "Modelos Probabilísticos en Investigación Operativa I", "Procesos Estocásticos"],
+  "Economía": ["Matemática Financiera", "Modelos Econométricos"],
+  "Calculo III": ["IEDO", "Programación no Lineal y Dinámica"],
+  "Algebra Lineal": ["IEDO", "Programación Lineal y Entera", "Matemática Financiera", "Métodos Numéricos"],
+  "Modelos Determinísticos en Investigación Operativa I": [
+    "Programación de Computadoras",
+    "Teoría, Análisis y diseño de sistemas",
+    "Modelos Determinísticos en Investigación Operativa II",
+    "Practica pre profesional Módulo I",
+    "Modelos Probabilísticos en Investigación Operativa I"
+  ],
+  "Programación de Computadoras": ["Métodos Numéricos", "Practica pre profesional Módulo I", "Heurística y Metaheurística"],
+  "IEDO": ["Procesos Estocásticos"],
+  "Inferencia Estadística": ["Simulación de sistemas", "Teoría de decisiones", "Modelos Econométricos"],
+  "Programación Lineal y Entera": [
+    "Modelos Determinísticos en Investigación Operativa II",
+    "Matemática Financiera",
+    "Practica pre profesional Módulo I",
+    "Teoría de Grafos",
+    "Programación no Lineal y Dinámica"
+  ],
+  "Teoría, Análisis y diseño de sistemas": ["Gestión de Sistemas Organizacionales"],
+  "Modelos Determinísticos en Investigación Operativa II": ["Seminario de Investigación I"],
+  "Matemática Financiera": ["Teoría de decisiones", "Modelos Econométricos", "Formulación y Gestión de Proyectos"],
+  "Métodos Numéricos": ["Programación no Lineal y Dinámica"],
+  "Practica pre profesional Módulo I": ["Practica pre profesional Módulo II"],
+  "Modelos Probabilísticos en Investigación Operativa I": ["Modelos Probabilísticos en Investigación Operativa II", "Simulación de sistemas"],
+  "Procesos Estocásticos": ["Simulación de sistemas"],
+  "Gestión de Sistemas Organizacionales": ["Formulación y Gestión de Proyectos"],
+  "Seminario de Investigación I": ["Seminario de Investigación II"],
+  "Modelos Probabilísticos en Investigación Operativa II": ["Practica pre profesional Módulo II"],
+  "Simulación de sistemas": [
+    "Practica pre profesional Módulo II",
+    "Seminario de Tesis de Investigación Operativa I",
+    "Estudio de caso en Investigación Operativa"
+  ],
+  "Teoría de Grafos": [
+    "Heurística y Metaheurística",
+    "Practica pre profesional Módulo II",
+    "Seminario de Tesis de Investigación Operativa I",
+    "Estudio de caso en Investigación Operativa"
+  ],
+  "Heurística y Metaheurística": ["Estudio de caso en Investigación Operativa"],
+  "Teoría de decisiones": ["Seminario de Tesis de Investigación Operativa I", "Estudio de caso en Investigación Operativa"],
+  "Programación no Lineal y Dinámica": ["Seminario de Tesis de Investigación Operativa I", "Estudio de caso en Investigación Operativa"],
+  "Seminario de Investigación II": ["Seminario de Tesis de Investigación Operativa I"],
+  "Practica pre profesional Módulo II": ["Practica pre profesional Módulo III"],
+  "Modelos Econométricos": ["Series cronológicas"],
+  "Seminario de Tesis de Investigación Operativa I": ["Seminario de Tesis de Investigación Operativa II"],
+  "Series cronológicas": [],
+  "Seminario de Tesis de Investigación Operativa II": [],
+  "Estudio de caso en Investigación Operativa": [],
+  "Formulación y Gestión de Proyectos": [],
+  "Practica pre profesional Módulo III": []
+};
 
-document.addEventListener("DOMContentLoaded", function () {
-  const cursos = document.querySelectorAll(".ramo");
-  const aprobados = new Set(JSON.parse(localStorage.getItem("cursosAprobados") || "[]"));
+const malla = document.getElementById('malla');
+const estadoRamos = {};
 
-  function guardarEstado() {
-    localStorage.setItem("cursosAprobados", JSON.stringify(Array.from(aprobados)));
-  }
+function crearRamo(nombre) {
+  const div = document.createElement('div');
+  div.className = 'ramo';
+  div.textContent = nombre;
+  div.onclick = () => toggleRamo(nombre, div);
+  div.dataset.nombre = nombre;
+  estadoRamos[nombre] = false;
+  return div;
+}
 
-  function actualizarCursos() {
-    cursos.forEach((curso) => {
-      const nombre = curso.getAttribute("data-nombre");
-      if (aprobados.has(nombre)) {
-        curso.classList.add("aprobado");
-      } else {
-        curso.classList.remove("aprobado");
+function toggleRamo(nombre, div) {
+  if (estadoRamos[nombre]) return;
+  estadoRamos[nombre] = true;
+  div.classList.add('aprobado');
+  desbloquear(nombre);
+}
+
+function desbloquear(nombre) {
+  for (let ramo in ramos) {
+    const requisitos = ramos[ramo];
+    if (requisitos.includes(nombre)) {
+      if (requisitos.every(req => estadoRamos[req])) {
+        const divs = document.querySelectorAll(`.ramo[data-nombre="${ramo}"]`);
+        divs.forEach(d => d.classList.add('desbloqueado'));
       }
-
-      const requisitos = curso.getAttribute("data-abre")?.split(",").map(r => r.trim()) || [];
-      const desbloqueado = requisitos.every(r => aprobados.has(r));
-
-      curso.classList.toggle("bloqueado", !desbloqueado && requisitos.length > 0);
-      curso.classList.toggle("desbloqueado", desbloqueado || requisitos.length === 0);
-    });
+    }
   }
+}
 
-  cursos.forEach((curso) => {
-    curso.addEventListener("click", () => {
-      const nombre = curso.getAttribute("data-nombre");
+function iniciarMalla() {
+  for (let nombre in ramos) {
+    const div = crearRamo(nombre);
+    malla.appendChild(div);
+  }
+}
 
-      if (!curso.classList.contains("bloqueado")) {
-        if (aprobados.has(nombre)) {
-          aprobados.delete(nombre);
-        } else {
-          aprobados.add(nombre);
-        }
-        guardarEstado();
-        actualizarCursos();
-      }
-    });
-  });
-
-  actualizarCursos();
-});
+iniciarMalla();
