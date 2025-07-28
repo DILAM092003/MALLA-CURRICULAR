@@ -1,84 +1,68 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #fff0f5;
-    color: #333;
-    padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff0f5;
+  margin: 0;
+  padding: 20px;
 }
 
 h1 {
-    text-align: center;
-    color: #d63384;
+  text-align: center;
+  color: #c2185b;
 }
 
-.malla {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
 
 .ciclo {
-    background: #ffe0ef;
-    border: 2px solid #f9c5d1;
-    padding: 15px;
-    border-radius: 10px;
+  background-color: #fce4ec;
+  border: 2px solid #f06292;
+  border-radius: 8px;
+  padding: 10px;
+  width: 250px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
 
 .ciclo h2 {
-    color: #b3005f;
+  text-align: center;
+  color: #ad1457;
+  font-size: 1.2em;
+  margin-bottom: 10px;
 }
 
 .ramo {
-    background-color: #fff;
-    border: 2px solid #d63384;
-    color: #d63384;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.ramo:hover {
-    background-color: #f9d2e3;
-}
-
-.ramo.aprobado {
-    background-color: #d63384;
-    color: white;
-    text-decoration: line-through;
-    pointer-events: none;
-    opacity: 0.7;
+  background-color: #f8bbd0;
+  border: 1px solid #ec407a;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-size: 0.95em;
+  font-weight: bold;
 }
 
 .ramo.bloqueado {
-    background-color: #f3b9c7;
-    color: #999;
-    pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f3e5f5;
+  color: #888;
+  border: 1px dashed #ba68c8;
 }
 
-
-
-
-
-
-.ramo {
-    background-color: #e0f7fa;
-    border: 1px solid #81d4fa;
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 5px;
-    user-select: none;
+.ramo.desbloqueado:hover {
+  background-color: #f06292;
+  color: white;
 }
 
 .ramo.aprobado {
-    background-color: #4dd0e1;
-    color: white;
-    text-decoration: line-through;
-}
-
-.ramo.desbloqueado {
-    border: 2px dashed #00796b;
+  background-color: #ec407a;
+  color: white;
+  text-decoration: line-through;
 }
 
